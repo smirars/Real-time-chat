@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import { privateRoutes, publicRoutes } from "../routes";
 import { ROUTES } from "../utils/consts";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -10,7 +10,7 @@ const AppRouter = () => {
     const [user] = useAuthState(auth);
 
     return (
-        <Switch>
+        <Routes>
             {user ? (
                 privateRoutes.map(({ path, Component }) => (
                     <Route key={path} path={path} component={Component} exact />
@@ -20,8 +20,8 @@ const AppRouter = () => {
                     <Route key={path} path={path} component={Component} exact />
                 ))
             )}
-            <Redirect to={user ? ROUTES.CHAT : ROUTES.LOGIN} />
-        </Switch>
+            <Navigate to={user ? ROUTES.CHAT : ROUTES.LOGIN} />
+        </Routes>
     );
 };
 
