@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { privateRoutes, publicRoutes } from "../routes";
-import { ROUTES } from "../utils/consts";
+import { LOGIN_ROUTE, CHAT_ROUTE } from "../utils/consts";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Context } from "../index";
 
@@ -20,7 +20,7 @@ const AppRouter = () => {
                     <Route key={path} path={path} component={Component} exact />
                 ))
             )}
-            <Navigate to={user ? ROUTES.CHAT : ROUTES.LOGIN} />
+            <Navigate to={user ? CHAT_ROUTE : LOGIN_ROUTE} />
         </Routes>
     );
 };
