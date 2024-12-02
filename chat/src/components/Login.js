@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Button, Container, Grid, Box } from "@material-ui/core";
+import { Button, Container, Grid, Box } from "@mui/material";
 import { Context } from "../index";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 

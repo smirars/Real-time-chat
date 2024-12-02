@@ -3,7 +3,7 @@ import { Context } from "../index";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { collection, addDoc, query, orderBy, serverTimestamp } from "firebase/firestore";
-import { Avatar, Button, Container, Grid, TextField } from "@material-ui/core";
+import { Avatar, Button, Container, Grid, TextField } from "@mui/material";
 import Loader from "./Loader";
 
 const Chat = () => {
