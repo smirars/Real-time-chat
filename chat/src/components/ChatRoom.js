@@ -2,11 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { firestore } from '../firebaseConfig'; 
 import { collection, addDoc, query, onSnapshot, orderBy } from 'firebase/firestore';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { Context } from '../index'; 
 
 const ChatRoom = () => {
     const { chatId } = useParams();
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
+    const { auth } = useContext(Context);
+    const [user] = useAuthState(auth);
 
     useEffect(() => {
         const messagesRef = collection(firestore, `chats/${chatId}/messages`);
@@ -19,11 +23,11 @@ const ChatRoom = () => {
     }, [chatId]);
 
     const sendMessage = async () => {
-        if (newMessage.trim()) {
+        if (newMessage.trim() && user) {
             const messagesRef = collection(firestore, `chats/${chatId}/messages`);
             await addDoc(messagesRef, {
                 text: newMessage,
-                sender: "Anonymous", 
+                sender: user.uid, 
                 timestamp: Date.now(),
             });
             setNewMessage('');
