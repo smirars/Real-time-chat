@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { firestore } from '../firebaseConfig'; // Убедитесь, что Firebase настроен
+import { firestore } from '../firebaseConfig'; 
 import { collection, addDoc, query, onSnapshot, orderBy } from 'firebase/firestore';
 
 const ChatRoom = () => {
@@ -23,7 +23,7 @@ const ChatRoom = () => {
             const messagesRef = collection(firestore, `chats/${chatId}/messages`);
             await addDoc(messagesRef, {
                 text: newMessage,
-                sender: "Anonymous", // Замените на текущего пользователя
+                sender: "Anonymous", 
                 timestamp: Date.now(),
             });
             setNewMessage('');
