@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { privateRoutes, publicRoutes } from "../routes";
-import { LOGIN_ROUTE, CHAT_ROUTE } from "../utils/consts";
+import { LOGIN_ROUTE} from "../utils/consts";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Context } from "../index";
-import ChatSelector from "../components/ChatSelector"; // Новый компонент выбора чата
-import ChatRoom from "../components/ChatRoom"; // Новый компонент комнаты чата
+import ChatSelector from "../components/ChatSelector";
+import ChatRoom from "../components/ChatRoom";
 
 const AppRouter = () => {
     const { auth } = useContext(Context);
