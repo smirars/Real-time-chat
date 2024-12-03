@@ -27,7 +27,8 @@ const ChatRoom = () => {
             const messagesRef = collection(firestore, `chats/${chatId}/messages`);
             await addDoc(messagesRef, {
                 text: newMessage,
-                sender: user.uid, 
+                sender: user.uid,
+                senderName: user.displayName || 'Гость', 
                 timestamp: Date.now(),
             });
             setNewMessage('');
@@ -40,7 +41,7 @@ const ChatRoom = () => {
             <div style={{ border: '1px solid #ccc', padding: '20px', margin: '20px auto', width: '50%' }}>
                 {messages.map((msg) => (
                     <div key={msg.id}>
-                        <strong>{msg.sender}:</strong> {msg.text}
+                        <strong>{msg.senderName || 'Аноним'}:</strong> {msg.text}
                     </div>
                 ))}
             </div>
