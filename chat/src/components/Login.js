@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import { Button, Container, Grid, Box } from "@mui/material";
 import { Context } from "../index";
-import { GoogleAuthProvider, signInWithPopup, signInWithRedirect } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, signInWithRedirect, signInAnonymously } from "firebase/auth";
 
 const Login = () => {
     const { auth } = useContext(Context);
 
-    const login = async () => {
+    const loginWithGoogle = async () => {
         const provider = new GoogleAuthProvider();
     
         try {
@@ -26,6 +26,15 @@ const Login = () => {
         }
     };
 
+    const loginAsGuest = async () => {
+        try {
+            const result = await signInAnonymously(auth);
+            console.log("Гостевой вход выполнен:", result.user);
+        } catch (error) {
+            console.error("Ошибка гостевого входа:", error);
+        }
+    };
+
     return (
         <Container>
             <Grid container alignItems="center" justifyContent="center" style={{ height: 'calc(100vh - 50px)' }}>
@@ -36,8 +45,13 @@ const Login = () => {
                     style={{ width: 400, background: 'lightgray', padding: 20 }}
                 >
                     <Box>
-                        <Button onClick={login} variant="outlined">
+                        <Button onClick={loginWithGoogle} variant="outlined">
                             Войти с помощью Google
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button onClick={loginAsGuest} variant="outlined" color="secondary">
+                            Войти как гость
                         </Button>
                     </Box>
                 </Grid>
