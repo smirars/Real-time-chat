@@ -4,6 +4,8 @@ import { privateRoutes, publicRoutes } from "../routes";
 import { LOGIN_ROUTE, CHAT_ROUTE } from "../utils/consts";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Context } from "../index";
+import ChatSelector from "../components/ChatSelector"; // Новый компонент выбора чата
+import ChatRoom from "../components/ChatRoom"; // Новый компонент комнаты чата
 
 const AppRouter = () => {
     const { auth } = useContext(Context);
@@ -12,15 +14,23 @@ const AppRouter = () => {
     return (
         <Routes>
             {user
-                ? privateRoutes.map(({ path, Component }) => (
-                      <Route key={path} path={path} element={<Component />} />
-                  ))
-                : publicRoutes.map(({ path, Component }) => (
-                      <Route key={path} path={path} element={<Component />} />
-                  ))}
-            <Route path="*" element={<Navigate to={user ? CHAT_ROUTE : LOGIN_ROUTE} />} />
+                ? (
+                    <>
+                        {privateRoutes.map(({ path, Component }) => (
+                            <Route key={path} path={path} element={<Component />} />
+                        ))}
+                        <Route path="/select-chat" element={<ChatSelector />} />
+                        <Route path="/chat/:chatId" element={<ChatRoom />} />
+                    </>
+                ) : (
+                    publicRoutes.map(({ path, Component }) => (
+                        <Route key={path} path={path} element={<Component />} />
+                    ))
+                )}
+            <Route path="*" element={<Navigate to={user ? "/select-chat" : LOGIN_ROUTE} />} />
         </Routes>
     );
 };
 
 export default AppRouter;
+
